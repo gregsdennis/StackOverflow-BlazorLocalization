@@ -1,0 +1,28 @@
+﻿@page "/"
+@using System.Globalization
+@using MyLibrary
+
+<PageTitle>Home</PageTitle>
+
+<EditForm Model="_culture">
+	<InputSelect @bind-Value="_culture" DisplayName="Language" class="form-control">
+		<option value="@CultureInfo.GetCultureInfo("en")">English (default)</option>
+		<option value="@CultureInfo.GetCultureInfo("it")">Italian</option>
+		<option value="@CultureInfo.GetCultureInfo("fr")">French</option>
+		<option value="@CultureInfo.GetCultureInfo("es")">Spanish</option>
+	</InputSelect>
+	<button class="btn btn-primary mt-2" @onclick="Run">Get Text</button>
+</EditForm>
+
+<h1>@_text</h1>
+
+@code
+{
+	private CultureInfo _culture = CultureInfo.CurrentCulture;
+	private string _text;
+
+	private void Run()
+	{
+		_text = MyService.GetText(_culture);
+	}
+}
